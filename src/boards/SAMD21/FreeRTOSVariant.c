@@ -96,7 +96,12 @@ void vNopDelayMS(unsigned long millis)
 
 void  __attribute__((weak)) vApplicationIdleHook( void ) 
 {
+  /*
+   * calling loop() here is a bug,
+   * which may cause loop() be called firstly,
+   * before calling of setup().
   loop(); //will use your projects loop function as the rtos idle loop
+   */
 }
 
 #ifdef __cplusplus
