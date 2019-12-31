@@ -1,15 +1,13 @@
 #ifndef FREEROTSVARIANT_H
 #define FREEROTSVARIANT_H
 
+// Bugfix: Included Arduino.h in extern "C"
+#include <Arduino.h>
+#include "task.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <Arduino.h>
-#include "FreeRTOS.h"
-#include "task.h"
-
-
 	//**************************************************
 	// defines
 	//**************************************************

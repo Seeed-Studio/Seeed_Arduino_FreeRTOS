@@ -1270,15 +1270,15 @@ typedef struct xSTATIC_STREAM_BUFFER
 /* Message buffers are built on stream buffers. */
 typedef StaticStreamBuffer_t StaticMessageBuffer_t;
 
+#ifdef __cplusplus
+}
+#endif
+
  #ifdef ARDUINO_ARCH_SAMD
  #include "boards/SAMD21/FreeRTOSVariant.h"
  #else
  #error  architecture not support!
  #endif
-
-#ifdef __cplusplus
-}
-#endif
 
 
 #endif /* INC_FREERTOS_H */
