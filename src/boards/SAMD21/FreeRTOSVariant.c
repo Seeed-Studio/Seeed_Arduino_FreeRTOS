@@ -93,6 +93,18 @@ void vNopDelayMS(unsigned long millis)
   }
 }
 
+/*
+ * override Arduino delay()
+ */
+extern void _real_delay( unsigned long ms );
+void delay( unsigned long ms )
+{
+  if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
+    vTaskDelay( (ms * 1000) / portTICK_PERIOD_US );
+  } else {
+    _real_delay(ms);
+  }
+}
 
 void  __attribute__((weak)) vApplicationIdleHook( void ) 
 {

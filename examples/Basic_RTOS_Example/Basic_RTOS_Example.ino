@@ -38,11 +38,6 @@ void myDelayUs(int us)
   vTaskDelay( us / portTICK_PERIOD_US );  
 }
 
-void myDelayMs(int ms)
-{
-  vTaskDelay( (ms * 1000) / portTICK_PERIOD_US );  
-}
-
 void myDelayMsUntil(TickType_t *previousWakeTime, int ms)
 {
   vTaskDelayUntil( previousWakeTime, (ms * 1000) / portTICK_PERIOD_US );  
@@ -59,7 +54,7 @@ static void threadA( void *pvParameters )
   for(int x=0; x<20; ++x)
   {
     SERIAL.print("A");
-    myDelayMs(500);
+    delay(500);
   }
   
   // delete ourselves.
@@ -79,7 +74,7 @@ static void threadB( void *pvParameters )
   while(1)
   {
     SERIAL.println("B");
-    myDelayMs(2000);
+    delay(2000);
   }
 
 }
@@ -117,7 +112,7 @@ void taskMonitor(void *pvParameters)
 
       SERIAL.println("******************************");
 
-      myDelayMs(10000); // print every 10 seconds
+      delay(10000); // print every 10 seconds
     }
 
     // delete ourselves.
