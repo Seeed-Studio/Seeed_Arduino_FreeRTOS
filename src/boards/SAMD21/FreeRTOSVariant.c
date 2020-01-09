@@ -116,6 +116,12 @@ void  __attribute__((weak)) vApplicationIdleHook( void )
    */
 }
 
+void yield(void) {
+  if (xTaskGetSchedulerState() == taskSCHEDULER_RUNNING) {
+    taskYIELD();
+  }
+}
+
 #ifdef __cplusplus
 }
 #endif
