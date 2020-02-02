@@ -2,15 +2,15 @@
 extern "C" {
 #endif
 
-/*-----------------------------------------------------------
- * Port specific definitions.
- *
- * The settings in this file configure FreeRTOS correctly for the
- * given hardware and compiler.
- *
- * These settings should not be altered.
- *-----------------------------------------------------------
- */
+/*  -----------------------------------------------------------
+    Port specific definitions.
+
+    The settings in this file configure FreeRTOS correctly for the
+    given hardware and compiler.
+
+    These settings should not be altered.
+    -----------------------------------------------------------
+*/
 
 /* Type definitions. */
 #define portCHAR		char
@@ -26,11 +26,11 @@ typedef long BaseType_t;
 typedef unsigned long UBaseType_t;
 
 #if( configUSE_16_BIT_TICKS == 1 )
-	typedef uint16_t TickType_t;
-	#define portMAX_DELAY ( TickType_t ) 0xffff
+typedef uint16_t TickType_t;
+#define portMAX_DELAY ( TickType_t ) 0xffff
 #else
-	typedef uint32_t TickType_t;
-	#define portMAX_DELAY ( TickType_t ) 0xffffffffUL
+typedef uint32_t TickType_t;
+#define portMAX_DELAY ( TickType_t ) 0xffffffffUL
 #endif
 /*-----------------------------------------------------------*/
 
@@ -43,7 +43,7 @@ typedef unsigned long UBaseType_t;
 
 
 /* Scheduler utilities. */
-extern void vPortYield( void );
+extern void vPortYield(void);
 #define portNVIC_INT_CTRL_REG		( * ( ( volatile uint32_t * ) 0xe000ed04 ) )
 #define portNVIC_PENDSVSET_BIT		( 1UL << 28UL )
 #define portYIELD()					vPortYield()
@@ -53,10 +53,10 @@ extern void vPortYield( void );
 
 
 /* Critical section management. */
-extern void vPortEnterCritical( void );
-extern void vPortExitCritical( void );
-extern uint32_t ulSetInterruptMaskFromISR( void ) __attribute__((naked));
-extern void vClearInterruptMaskFromISR( uint32_t ulMask )  __attribute__((naked));
+extern void vPortEnterCritical(void);
+extern void vPortExitCritical(void);
+extern uint32_t ulSetInterruptMaskFromISR(void) __attribute__((naked));
+extern void vClearInterruptMaskFromISR(uint32_t ulMask)  __attribute__((naked));
 
 #define portSET_INTERRUPT_MASK_FROM_ISR()		ulSetInterruptMaskFromISR()
 #define portCLEAR_INTERRUPT_MASK_FROM_ISR(x)	vClearInterruptMaskFromISR( x )

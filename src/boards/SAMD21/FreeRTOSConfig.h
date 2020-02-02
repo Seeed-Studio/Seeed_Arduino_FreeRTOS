@@ -22,7 +22,7 @@
 
 /* Run time stats related definitions. */
 //void vMainConfigureTimerForRunTimeStats( void );
-unsigned long ulMainGetRunTimeCounterValue( void );
+unsigned long ulMainGetRunTimeCounterValue(void);
 #define configGENERATE_RUN_TIME_STATS	0
 #define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() //vMainConfigureTimerForRunTimeStats()
 #define portGET_RUN_TIME_COUNTER_VALUE() ulMainGetRunTimeCounterValue()
@@ -37,8 +37,8 @@ unsigned long ulMainGetRunTimeCounterValue( void );
 #define configTIMER_QUEUE_LENGTH		5
 #define configTIMER_TASK_STACK_DEPTH	( 80 )
 
-/* Set the following definitions to 1 to include the API function, or zero
-to exclude the API function. */
+/*  Set the following definitions to 1 to include the API function, or zero
+    to exclude the API function. */
 #define INCLUDE_xTaskGetCurrentTaskHandle   1
 #define INCLUDE_vTaskPrioritySet		1
 #define INCLUDE_uxTaskPriorityGet		1
@@ -49,10 +49,10 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelay				1
 #define INCLUDE_eTaskGetState			1
 
-/* This demo makes use of one or more example stats formatting functions.  These
-format the raw data provided by the uxTaskGetSystemState() function in to human
-readable ASCII form.  See the notes in the implementation of vTaskList() within
-FreeRTOS/Source/tasks.c for limitations. */
+/*  This demo makes use of one or more example stats formatting functions.  These
+    format the raw data provided by the uxTaskGetSystemState() function in to human
+    readable ASCII form.  See the notes in the implementation of vTaskList() within
+    FreeRTOS/Source/tasks.c for limitations. */
 #define configUSE_STATS_FORMATTING_FUNCTIONS	1
 
 #define configUSE_MUTEXES        				1
@@ -60,21 +60,21 @@ FreeRTOS/Source/tasks.c for limitations. */
 #define INCLUDE_xTaskGetIdleTaskHandle 			1
 #define configUSE_MALLOC_FAILED_HOOK			1
 #define configCHECK_FOR_STACK_OVERFLOW 			2
-/* Normal assert() semantics without relying on the provision of an assert.h
-header file. */
+/*  Normal assert() semantics without relying on the provision of an assert.h
+    header file. */
 
 extern void rtosFatalError(void);
 #define configASSERT( x ) \
-	if( ( x ) == 0 ) { taskDISABLE_INTERRUPTS(); rtosFatalError(); }
+    if( ( x ) == 0 ) { taskDISABLE_INTERRUPTS(); rtosFatalError(); }
 
-/* Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
-standard names - or at least those used in the unmodified vector table. */
+/*  Definitions that map the FreeRTOS port interrupt handlers to their CMSIS
+    standard names - or at least those used in the unmodified vector table. */
 #define xPortPendSVHandler PendSV_Handler
 //#define xPortSysTickHandler SysTick_Handler
 
-/* The size of the global output buffer that is available for use when there
-are multiple command interpreters running at once (for example, one on a UART
-and one on TCP/IP).  This is done to prevent an output buffer being defined by
-each implementation - which would waste RAM.  In this case, there is only one
-command interpreter running. */
+/*  The size of the global output buffer that is available for use when there
+    are multiple command interpreters running at once (for example, one on a UART
+    and one on TCP/IP).  This is done to prevent an output buffer being defined by
+    each implementation - which would waste RAM.  In this case, there is only one
+    command interpreter running. */
 #define configCOMMAND_INT_MAX_OUTPUT_SIZE 2048
