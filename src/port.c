@@ -39,7 +39,14 @@
 #include "task.h"
 
  #ifdef ARDUINO_ARCH_SAMD
- #include "boards/SAMD21/port.h"
+  #if defined(__SAMD51__)
+   #include "boards/SAMD51/port.h"
+  #elif defined(__SAMD21G18A__)
+   #include "boards/SAMD21/port.h"
+  #else
+   #error Processor architecture not recognized!
+  #endif
+ 
  #else
  #error  architecture not support!
  #endif

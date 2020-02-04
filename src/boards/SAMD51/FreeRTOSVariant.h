@@ -14,7 +14,7 @@ extern "C" {
 
 // calibration factor for vNopDelayMS
 // used to set accuracy of nopDelayMS function
-// this was experimentally chosen from a samd21 processor at 32khz
+// TODO: assuming same architecture noop delay as samd21 for now
 #define CAL_FACTOR (F_CPU/6000)
 
 //**************************************************

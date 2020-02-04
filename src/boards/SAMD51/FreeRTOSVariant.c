@@ -1,4 +1,4 @@
-#if defined(ARDUINO_ARCH_SAMD) && defined (__SAMD21G18A__)
+#if defined(ARDUINO_ARCH_SAMD) && defined(__SAMD51__)
  
 #ifdef __cplusplus
 extern "C" {
