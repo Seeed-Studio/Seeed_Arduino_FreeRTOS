@@ -5,7 +5,7 @@
 #define configTICK_RATE_HZ				( ( TickType_t ) 1000 )
 #define configMAX_PRIORITIES			( 9 )
 #define configMINIMAL_STACK_SIZE		( ( unsigned short ) 150 )
-#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 64 * 1024 ) )
+#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 12 * 1024 ) )
 #define configMAX_TASK_NAME_LEN			( 8 )
 #define configUSE_TRACE_FACILITY		1
 #define configUSE_16_BIT_TICKS			0
@@ -78,3 +78,4 @@ extern void rtosFatalError(void);
     each implementation - which would waste RAM.  In this case, there is only one
     command interpreter running. */
 #define configCOMMAND_INT_MAX_OUTPUT_SIZE 2048
+

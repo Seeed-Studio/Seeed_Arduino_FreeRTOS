@@ -1,5 +1,3 @@
-
-
 #ifndef FREE_RTOS_SAMD21_H
 #define FREE_RTOS_SAMD21_H
 
@@ -18,15 +16,9 @@
 #include <list.h>
 #include <FreeRTOSConfig.h>
 #include <event_groups.h>
-
-#ifdef ARDUINO_ARCH_SAMD
-    #include "boards/SAMD21/FreeRTOSVariant.h"
-#else
-    #error  architecture not support!
-#endif
-
 #include <deprecated_definitions.h>
 #include <croutine.h>
 
 
 #endif
+
