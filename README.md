@@ -1,4 +1,4 @@
-# Seeed-Arduino-FreeRTOS
+# Seeed-Arduino-FreeRTOS  [![Build Status](https://travis-ci.com/Seeed-Studio/Seeed_Arduino_FreeRTOS.svg?branch=master)](https://travis-ci.com/Seeed-Studio/Seeed_Arduino_FreeRTOS)
 
 ### Introduction
 
