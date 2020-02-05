@@ -26,8 +26,8 @@
  */
 
 
-#ifndef PORTMACRO_H
-#define PORTMACRO_H
+#ifndef CORTEX_M4_PORTMACRO_H
+#define CORTEX_M4_PORTMACRO_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -72,6 +72,7 @@ typedef unsigned long UBaseType_t;
 /* Architecture specifics. */
 #define portSTACK_GROWTH			( -1 )
 #define portTICK_PERIOD_MS			( ( TickType_t ) 1000 / configTICK_RATE_HZ )
+#define portTICK_PERIOD_US			( ( TickType_t ) 1000000 / configTICK_RATE_HZ )
 #define portBYTE_ALIGNMENT			8
 /*-----------------------------------------------------------*/
 
@@ -239,5 +240,5 @@ portFORCE_INLINE static void vPortSetBASEPRI( uint32_t ulNewMaskValue )
 }
 #endif
 
-#endif /* PORTMACRO_H */
+#endif /* CORTEX_M4_PORTMACRO_H */
 

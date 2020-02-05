@@ -284,6 +284,8 @@ static void prvPortStartFirstTask( void )
 /*
  * See header file for description.
  */
+void (*rtosSysTick_Handler)(void);
+
 BaseType_t xPortStartScheduler( void )
 {
 	/* configMAX_SYSCALL_INTERRUPT_PRIORITY must not be set to 0.
@@ -329,6 +331,7 @@ BaseType_t xPortStartScheduler( void )
 			ucMaxPriorityValue <<= ( uint8_t ) 0x01;
 		}
 
+		#undef __NVIC_PRIO_BITS
 		#ifdef __NVIC_PRIO_BITS
 		{
 			/* Check the CMSIS configuration that defines the number of
@@ -357,6 +360,8 @@ BaseType_t xPortStartScheduler( void )
 		*pucFirstUserPriorityRegister = ulOriginalPriority;
 	}
 	#endif /* conifgASSERT_DEFINED */
+
+	rtosSysTick_Handler = &xPortSysTickHandler;
 
 	/* Make PendSV and SysTick the lowest priority interrupts. */
 	portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
@@ -773,3 +778,8 @@ static void vPortEnableVFP( void )
 #endif /* configASSERT_DEFINED */
 
 
+int sysTickHook(void) {
+	if (rtosSysTick_Handler)
+		rtosSysTick_Handler();
+	return 0; // return zero to keep running the arduino default handler!
+}

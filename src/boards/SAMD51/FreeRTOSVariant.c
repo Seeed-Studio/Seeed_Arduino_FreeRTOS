@@ -1,12 +1,12 @@
 #if defined(ARDUINO_ARCH_SAMD) && defined(__SAMD51__)
  
-#ifdef __cplusplus
-extern "C" {
-#endif
 #include <Arduino.h>
 #include <FreeRTOS.h>
 #include "FreeRTOSVariant.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 // this is referring to the loop function of your arduino project
 extern void loop(void); 
@@ -20,7 +20,7 @@ int ErrorLed_ActiveState  =  LOW;
 //************************************************************************
 
 // called on fatal error (interrupts disabled already)
-void rtosFatalError(void) 
+void rtosFatalError(void)
 {
 
   //Serial.println("Fatal Error");
