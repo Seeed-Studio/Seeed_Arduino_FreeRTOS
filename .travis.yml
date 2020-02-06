@@ -1,10 +1,14 @@
 language: generic
 matrix:
   include:
-    - env:
-        - BOARD="arduino:avr:uno"
+    # - env:
+    #    - BOARD="arduino:avr:uno"
+    # not works on AVR platform
     - env:
         - BOARD="Seeeduino:samd:seeed_XIAO_m0"
+    - env:
+        - BOARD="Seeeduino:samd:seeed_grove_ui_wireless"
+
 # default phases
 before_install:
   - mkdir -p "$HOME/bin"
@@ -30,11 +34,11 @@ install:
   - mkdir -p $HOME/Arduino/libraries
 script:
     - |
-      if [ "$BOARD" == "arduino:avr:uno" ]; then
+      if [ "$BOARD" == "Seeeduino:samd:seeed_XIAO_m0" ]; then
         buildExampleSketch Basic_RTOS_Example;
       fi
     - |
-      if [ "$BOARD" == "Seeeduino:samd:seeed_XIAO_m0" ]; then
+      if [ "$BOARD" == "Seeeduino:samd:seeed_grove_ui_wireless" ]; then
         buildExampleSketch Basic_RTOS_Example;
       fi
 notifications:
