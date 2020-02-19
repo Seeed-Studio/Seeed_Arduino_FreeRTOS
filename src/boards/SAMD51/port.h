@@ -141,9 +141,13 @@ static void prvTaskExitError( void );
 
 /*-----------------------------------------------------------*/
 
-/* Each task maintains its own interrupt status in the critical nesting
-variable. */
-static UBaseType_t uxCriticalNesting = 0xaaaaaaaa;
+/*
+ * Each task maintains its own interrupt status in the critical nesting variable.
+ *
+ * But refer to vPortEnterCritical/vPortExitCritical implementation,
+ * none zero value is a BUG, ever used: 0xaaaaaaaa.
+ */
+static UBaseType_t uxCriticalNesting = 0x0;
 
 /*
  * The number of SysTick increments that make up one tick period.
