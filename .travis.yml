@@ -13,7 +13,7 @@ before_install:
 script:
    - chmod +x seeed-arduino-ci.sh
    - cat $PWD/seeed-arduino-ci.sh
-   - bash $PWD/seeed-arduino-ci.sh test
+   - bash $PWD/seeed-arduino-ci.sh Basic_RTOS_Example:uno
 
 notifications:
   email:
