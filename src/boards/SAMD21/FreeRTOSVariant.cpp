@@ -1,12 +1,12 @@
 #if defined(ARDUINO_ARCH_SAMD) && defined(__SAMD21G18A__)
+#include <Arduino.h>
+#include <FreeRTOS.h>
+#include "FreeRTOSVariant.h"
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-#include <Arduino.h>
-#include <FreeRTOS.h>
-#include "FreeRTOSVariant.h"
 
   // this is referring to the loop function of your arduino project
   extern void loop(void);
