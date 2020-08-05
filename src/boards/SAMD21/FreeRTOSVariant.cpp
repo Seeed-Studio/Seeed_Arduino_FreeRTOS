@@ -139,7 +139,7 @@ void tinyusb_task_backgroud(void *arg)
   {
     tud_task();
     tud_cdc_write_flush();
-    delay(50);
+    delay(10);
   }
   vTaskDelete(NULL);
 }
