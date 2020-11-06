@@ -46,7 +46,7 @@ extern "C"
   // called on full stack
   void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
   {
-
+    (void)xTask;
     Serial.print("Stack Overflow: ");
     Serial.println(pcTaskName);
 
