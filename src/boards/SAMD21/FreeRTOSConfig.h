@@ -5,7 +5,11 @@
 #define configTICK_RATE_HZ				( ( TickType_t ) 1000 )
 #define configMAX_PRIORITIES			( 9 )
 #define configMINIMAL_STACK_SIZE		( ( unsigned short ) 150 )
+#ifdef SEEED_XIAO_M0
+#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 14 * 1024 ) )
+#else
 #define configTOTAL_HEAP_SIZE			( ( size_t ) ( 12 * 1024 ) )
+#endif
 #define configMAX_TASK_NAME_LEN			( 8 )
 #define configUSE_TRACE_FACILITY		1
 #define configUSE_16_BIT_TICKS			0
