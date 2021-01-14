@@ -12,6 +12,6 @@
 #elif (__CORTEX_M == 0x04U)
 #include "../FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h"
 #elif (__CORTEX_M == 0x07U)
-#include "../FreeRTOS/Source/portable/GCC/ARM_CM7/portmacro.h"
+#include "../FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/portmacro.h"
 #endif
 #endif //_PORTMACRO_H_
