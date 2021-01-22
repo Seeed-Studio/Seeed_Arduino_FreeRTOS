@@ -10,7 +10,7 @@ void freertos_printf(const char *format, ...) {
     va_end(args);
 
     if (r > 0) {
-        SerialUSB.write(print_buf);
+        SERIAL_PORT_MONITOR.write(print_buf);
     }
 }
 }

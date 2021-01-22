@@ -1,6 +1,13 @@
 #ifndef _PORTMACRO_H_
 #define _PORTMACRO_H_
-#include <Arduino.h>
+#ifdef ARDUINO_ARCH_SAMD
+#include "sam.h"
+#endif
+
+#ifdef ARDUINO_ARCH_STM32
+#include "stm32_def.h"
+#endif
+
 #ifndef __CORTEX_M
 #pragma GCC error  "no \"__CORTEX_M\" definition"
 #endif
