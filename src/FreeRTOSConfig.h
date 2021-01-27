@@ -36,5 +36,5 @@
 #if __has_include("FreeRTOSConfig_extra.h")
 #include "FreeRTOSConfig_extra.h"
 #endif
-
+#define configUSE_POSIX_ERRNO 1  
 #endif /* _ARDUINO_FREERTOS_CONFIG_H */
