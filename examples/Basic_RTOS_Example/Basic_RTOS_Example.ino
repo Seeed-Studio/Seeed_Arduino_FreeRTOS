@@ -152,13 +152,10 @@ void setup() {
 }
 
 //*****************************************************************
-// This is now the rtos idle loop
-// No rtos blocking functions allowed!
+// loop never run
 //*****************************************************************
 void loop() {
-    // Optional commands, can comment/uncomment below
-    SERIAL.print("."); //print out dots in terminal, we only do this when the RTOS is in the idle state
-    vNopDelayMS(100);
+
 }
 
 
