@@ -2,10 +2,18 @@
 
 ### Introduction
 
-This library ports the latest FreeRTOS(10.2.1) and allow you to create FreeRTOS Projects in the in Arduino IDE.
+This library ports the latest FreeRTOS(10.4.3) and allow you to create FreeRTOS Projects in the in Arduino IDE.
 
 ### Boards
-  Currently, only samd21 architecture is supported.
+- samd21 series
+  - zero
+  - seeeduio xiao
+
+  **...**
+- samd51 series
+  - Wio Terminal
+
+  **...**
 ### License
 This software is written by LynnL4 for seeed studio
 Email:hongtai.liu@seeed.cc and is licensed under The MIT License. Check License.txt for more information.
