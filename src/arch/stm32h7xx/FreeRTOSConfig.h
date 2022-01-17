@@ -84,7 +84,6 @@ extern void freertos_printf(const char *format, ...);
 	if ((x) == 0)                                                       \
 	{                                                                   \
 		freertos_printf("\n\rASSERT: %s :#%d\n\r", __func__, __LINE__); \
-		taskDISABLE_INTERRUPTS();                                       \
 		assertBlink();                                                  \
 	}
 

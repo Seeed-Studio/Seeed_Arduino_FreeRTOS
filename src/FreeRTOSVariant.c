@@ -68,7 +68,7 @@ void assertBlink()
 	FreeRTOSConfig.h, and the xPortGetFreeHeapSize() API function can be used
 	to query the size of free heap space that remains (although it does not
 	provide information on how the remaining heap might be fragmented). */
-void vApplicationMallocFailedHook()
+void __attribute__((weak))  vApplicationMallocFailedHook()
 {
   errorBlink(2);
 }
@@ -101,7 +101,7 @@ void __attribute__((weak)) vApplicationIdleHook(void)
   \param[in] pxTask Task handle
   \param[in] pcTaskName Task name
   */
-void vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName)
+void __attribute__((weak)) vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName)
 {
   (void)pcTaskName;
   (void)pxTask;
@@ -112,19 +112,19 @@ void vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName)
 //------------------------------------------------------------------------------
 // catch exceptions
 /** Hard fault - blink four short flash every two seconds */
-void HardFault_Handler()
+void __attribute__((weak))  HardFault_Handler()
 {
   errorBlink(4);
 }
 
 /** Bus fault - blink five short flashes every two seconds */
-void BusFault_Handler()
+void __attribute__((weak))  BusFault_Handler()
 {
   errorBlink(5);
 }
 
 /** Usage fault - blink six short flashes every two seconds */
-void UsageFault_Handler()
+void __attribute__((weak))   UsageFault_Handler()
 {
   errorBlink(6);
 }
