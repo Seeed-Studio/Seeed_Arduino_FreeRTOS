@@ -15,7 +15,7 @@ extern "C"
   //************************************************************************
   // global variables
 
-  int ErrorLed_Pin = 13; //default arduino led pin
+  int ErrorLed_Pin = LED_BUILTIN; //default arduino led pin
   int ErrorLed_ActiveState = LOW;
 
   //************************************************************************
