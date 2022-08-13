@@ -61,11 +61,7 @@ task.h is included from an application file. */
 	heap - probably so it can be placed in a special segment or address. */
 	extern uint8_t ucHeap[ configTOTAL_HEAP_SIZE ];
 #else
-	static uint8_t ucHeap[ configTOTAL_HEAP_SIZE ]
-	#ifdef __SAMD51__
-	__attribute__ ((section("COMMON.ucHeap")))
-	#endif
-	;
+	static uint8_t ucHeap[ configTOTAL_HEAP_SIZE ];
 #endif /* configAPPLICATION_ALLOCATED_HEAP */
 
 /* Define the linked list structure.  This is used to link free blocks in order
@@ -116,8 +112,8 @@ static size_t xBlockAllocatedBit = 0;
 
 void *pvPortMalloc( size_t xWantedSize )
 {
-BlockLink_t *pxBlock, *pxPreviousBlock, *pxNewBlockLink;
-void *pvReturn = NULL;
+	BlockLink_t *pxBlock, *pxPreviousBlock, *pxNewBlockLink;
+	void *pvReturn = NULL;
 
 	vTaskSuspendAll();
 	{
@@ -266,8 +262,8 @@ void *pvReturn = NULL;
 
 void vPortFree( void *pv )
 {
-uint8_t *puc = ( uint8_t * ) pv;
-BlockLink_t *pxLink;
+	uint8_t *puc = ( uint8_t * ) pv;
+	BlockLink_t *pxLink;
 
 	if( pv != NULL )
 	{
@@ -438,3 +434,172 @@ uint8_t *puc;
 	}
 }
 
+// non standard contributed feature that can be enabled
+#define ENABLE_CALLOC_REALLOC 0
+
+#if ENABLE_CALLOC_REALLOC
+
+void *pvPortRealloc (void* ptr, size_t _size) 
+{ 
+  void *retVal = NULL; 
+  if (ptr == NULL && _size > 0) 
+  { 
+    retVal = pvPortMalloc(_size); 
+  } 
+  else if (ptr != NULL && _size == 0) 
+  { 
+    vPortFree(ptr); 
+    retVal = NULL; 
+  } 
+  else if (ptr != NULL && _size > 0) 
+  { 
+    vTaskSuspendAll(); //thread safety 
+	{ 
+		if( pxEnd == NULL ) 
+		{ 
+			prvHeapInit(); 
+		} 
+		else 
+		{ 
+			mtCOVERAGE_TEST_MARKER(); 
+		} 
+ 
+	 
+		BlockLink_t *pxBlock = (BlockLink_t *)(ptr - xHeapStructSize); 
+		size_t oldSize = (uint16_t)(pxBlock->xBlockSize - xHeapStructSize); //size of BlockLink + heap region aligned by portBYTE_ALIGNMENT 
+ 
+		if (_size > oldSize && _size < xFreeBytesRemaining) 
+		{ 
+		  _size += xHeapStructSize; 
+ 
+		  /* Ensure that blocks are always aligned to the required number 
+			of bytes. */ 
+		  if ( ( _size & portBYTE_ALIGNMENT_MASK ) != 0x00 ) 
+		  { 
+			/* Byte alignment required. */ 
+			_size += ( portBYTE_ALIGNMENT - ( _size & portBYTE_ALIGNMENT_MASK ) ); 
+			configASSERT( ( _size & portBYTE_ALIGNMENT_MASK ) == 0 ); 
+		  } 
+		  else 
+		  { 
+			mtCOVERAGE_TEST_MARKER(); 
+		  } 
+		  uint8_t *newHeapRegion = (uint8_t *)pvPortMalloc(_size - xHeapStructSize); 
+		  for (uint32_t i = 0; i < _size - xHeapStructSize; i++) 
+		  { 
+			newHeapRegion[i] = ((uint8_t *)ptr)[i]; 
+		  } 
+		  vPortFree(ptr); //libero il blocco precedentemente allocato 
+		  retVal = newHeapRegion; 
+ 
+		} 
+		else if (_size < oldSize) 
+		{ 
+		  BlockLink_t *pxNewBlockLink; 
+		  _size += xHeapStructSize; 
+		  if ( ( _size & portBYTE_ALIGNMENT_MASK ) != 0x00 ) 
+		  { 
+			/* Byte alignment required. */ 
+			_size += ( portBYTE_ALIGNMENT - ( _size & portBYTE_ALIGNMENT_MASK ) ); 
+			configASSERT( ( _size & portBYTE_ALIGNMENT_MASK ) == 0 ); 
+		  } 
+		  else 
+		  { 
+			mtCOVERAGE_TEST_MARKER(); 
+		  } 
+ 
+		  if ( (uint16_t)( pxBlock->xBlockSize - _size ) >= heapMINIMUM_BLOCK_SIZE ) //Possono essere ricavati due blocchi distinti - importantissimo il cast forzato! 
+		  { 
+			pxNewBlockLink = ( BlockLink_t * ) ( ( ( uint8_t * ) pxBlock ) + _size); 
+			pxNewBlockLink->xBlockSize = pxBlock->xBlockSize - _size; 
+			pxNewBlockLink->xBlockSize &= ~xBlockAllocatedBit; 
+ 
+			configASSERT( ( ( ( size_t ) pxNewBlockLink ) & portBYTE_ALIGNMENT_MASK ) == 0 ); 
+ 
+			pxBlock->xBlockSize = _size; 
+			pxBlock->xBlockSize |= xBlockAllocatedBit; 
+			pxBlock->pxNextFreeBlock = NULL; 
+ 
+			/* Insert the new block into the list of free blocks. */ 
+			xFreeBytesRemaining += (uint16_t)pxNewBlockLink->xBlockSize; 
+			prvInsertBlockIntoFreeList( pxNewBlockLink ); 
+		  } 
+		  else 
+		  { 
+			mtCOVERAGE_TEST_MARKER(); 
+		  } 
+		  retVal = ptr; 
+ 
+		} 
+		else //_size == oldSize 
+		{ 
+		  retVal = ptr; 
+		} 
+	} 
+    (void)xTaskResumeAll(); 
+  } 
+  else if (ptr == NULL && _size == 0) 
+  { 
+    retVal = NULL; 
+  } 
+ 
+  return retVal; 
+} 
+ 
+void * pvPortCalloc(size_t nmemb, size_t _size) 
+{ 
+  uint8_t *ptr = NULL; 
+  vTaskSuspendAll(); //thread safety 
+  { 
+	  ptr = (uint8_t *)pvPortMalloc(nmemb * _size); 
+	  for (uint32_t i = 0; i < nmemb; i++) 
+	  { 
+		ptr[i] = 0; 
+	  } 
+  } 
+  (void)xTaskResumeAll(); 
+  return (void *)ptr; 
+} 
+
+#endif
+
+/*------------------------------------------------------------*/ 
+/*-------------------------WRAPPING---------------------------*/ 
+/*------------------------------------------------------------*/ 
+void * __wrap_malloc (size_t _size) 
+{ 
+  return pvPortMalloc(_size); 
+} 
+ 
+void *__real_malloc(size_t); 
+ 
+/*------------------------------------------------------------*/ 
+ 
+void __wrap_free (void *ptr) 
+{ 
+  vPortFree(ptr); 
+} 
+ 
+void __real_free(void *); 
+ 
+/*------------------------------------------------------------*/ 
+ 
+#if ENABLE_CALLOC_REALLOC
+
+void * __wrap_realloc (void* ptr, size_t _size) 
+{ 
+	return pvPortRealloc(ptr, _size); 
+} 
+ 
+void * __real_realloc (void *, size_t); 
+ 
+/*------------------------------------------------------------*/ 
+ 
+void * __wrap_calloc(size_t nmemb, size_t _size) 
+{ 
+  return pvPortCalloc(nmemb, _size); 
+} 
+ 
+void * __real_calloc(size_t, size_t); 
+
+#endif
