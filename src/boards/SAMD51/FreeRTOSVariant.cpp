@@ -136,17 +136,24 @@ extern "C"
 void tinyusb_task_backgroud(void *arg)
 {
   (void *)arg;
+  uint32_t times = 0;
   while (1)
   {
     tud_task();
     tud_cdc_write_flush();
-    delay(10);
+    if (times <= 200)
+    {
+      times++;
+       delay(5);
+    }else{
+       delay(20);
+    }
   }
   vTaskDelete(NULL);
 }
 void tinyusb_task()
 {
-  xTaskCreate(tinyusb_task_backgroud, "tub back", 256, NULL, configMAX_PRIORITIES, NULL);
+  xTaskCreate(tinyusb_task_backgroud, "tub back", 512, NULL, configMAX_PRIORITIES, NULL);
 }
 #endif
 
