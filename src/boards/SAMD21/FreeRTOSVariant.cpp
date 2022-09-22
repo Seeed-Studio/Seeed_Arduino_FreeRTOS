@@ -145,7 +145,7 @@ void tinyusb_task_backgroud(void *arg)
 }
 void tinyusb_task()
 {
-  xTaskCreate(tinyusb_task_backgroud, "tub back", 256, NULL, configMAX_PRIORITIES, NULL);
+  xTaskCreate(tinyusb_task_backgroud, "tub back", 512, NULL, configMAX_PRIORITIES, NULL);
 }
 #endif
 
