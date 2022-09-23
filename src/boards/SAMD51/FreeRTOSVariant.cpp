@@ -185,6 +185,8 @@ void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, Stack
 void tinyusb_task_backgroud(void *arg)
 {
   (void *)arg;
+  // tinyusb wait for device to be configured (in setup())
+  delay(1000);
   Adafruit_TinyUSB_Core_init();
   while (1)
   {
