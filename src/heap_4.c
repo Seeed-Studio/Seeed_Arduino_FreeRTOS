@@ -552,7 +552,7 @@ void * pvPortCalloc(size_t nmemb, size_t _size)
   vTaskSuspendAll(); //thread safety 
   { 
 	  ptr = (uint8_t *)pvPortMalloc(nmemb * _size); 
-	  for (uint32_t i = 0; i < nmemb; i++) 
+	  for (uint32_t i = 0; i < nmemb * _size; i++) 
 	  { 
 		ptr[i] = 0; 
 	  } 
