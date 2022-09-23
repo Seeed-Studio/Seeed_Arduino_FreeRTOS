@@ -1105,6 +1105,7 @@ typedef struct xSTATIC_TCB
 	#if ( ( portSTACK_GROWTH > 0 ) || ( configRECORD_STACK_HIGH_ADDRESS == 1 ) )
 		void			*pxDummy8;
 	#endif
+	UBaseType_t     uxSizeOfStack;      /*< Support For CmBacktrace >*/
 	#if ( portCRITICAL_NESTING_IN_TCB == 1 )
 		UBaseType_t		uxDummy9;
 	#endif
