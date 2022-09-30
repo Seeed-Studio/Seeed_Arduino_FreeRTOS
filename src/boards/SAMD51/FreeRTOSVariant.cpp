@@ -167,6 +167,7 @@ void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, Stack
    * before calling of setup().
   loop(); //will use your projects loop function as the rtos idle loop
    */
+  tud_cdc_write_flush();
   }
 
   void yield(void)
@@ -175,6 +176,7 @@ void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, Stack
     {
       taskYIELD();
     }
+    tud_cdc_write_flush();
   }
 
 #ifdef __cplusplus
