@@ -14,4 +14,6 @@
 #include <event_groups.h>
 #include <croutine.h>
 
+#include <error_hooks.h>
+
 #endif //_SEEED_ARDUINO_FREERTOS_H_

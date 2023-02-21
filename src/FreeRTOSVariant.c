@@ -18,34 +18,6 @@ static void delayMS(uint32_t millis)
 }
 
 //------------------------------------------------------------------------------
-/** Blink error pattern
- *
- * \param[in] n  number of short pulses
- */
-static void errorBlink(int n)
-{
-#ifdef LED_BUILTIN
-  noInterrupts();
-  pinMode(LED_BUILTIN, OUTPUT);
-  for (;;)
-  {
-    int i;
-    for (i = 0; i < n; i++)
-    {
-      digitalWrite(LED_BUILTIN, 1);
-      delayMS(300);
-      digitalWrite(LED_BUILTIN, 0);
-      delayMS(300);
-    }
-    delayMS(2000);
-  }
-#else
-  while (1)
-    ;
-#endif // LED_BUILTIN
-}
-
-//------------------------------------------------------------------------------
 /** assertBlink
  * Blink one short pulse every two seconds if configASSERT fails.
 */
