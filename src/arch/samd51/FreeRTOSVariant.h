@@ -4,8 +4,8 @@ void tinyusb_task_backgroud(void *arg)
   (void *)arg;
   while (1)
   {
-    tud_task();
-    tud_cdc_write_flush();
+    TinyUSB_Device_Task();
+    TinyUSB_Device_FlushCDC();
     delay(10);
   }
   vTaskDelete(NULL);
