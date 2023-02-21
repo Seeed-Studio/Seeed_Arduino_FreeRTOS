@@ -64,6 +64,12 @@ unsigned long ulMainGetRunTimeCounterValue(void);
 #define INCLUDE_vTaskDelay 1
 #define INCLUDE_eTaskGetState 1
 
+/* Arduino framework integration */
+// calibration factor for vNopDelayMS in error_hooks.c
+// used to set accuracy of nopDelayMS function
+// this was experimentally chosen from a samd21 processor at 32khz
+#define configCAL_FACTOR (F_CPU/6000)
+
 /*  This demo makes use of one or more example stats formatting functions.  These
     format the raw data provided by the uxTaskGetSystemState() function in to human
     readable ASCII form.  See the notes in the implementation of vTaskList() within
