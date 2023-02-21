@@ -3,9 +3,15 @@
 // Type Defines and Constants
 //**************************************************************************
 
+#if defined(USE_TINYUSB)
+#include <Adafruit_TinyUSB.h>
+extern void tinyusb_task();
+#endif
+
 // Select the serial port the project should use and communicate over
-// Sombe boards use SerialUSB, some use Serial
-#define Terminal          SerialUSB
+// Some boards use SerialUSB, some use Serial
+// #define Terminal          SerialUSB
+#define Terminal          Serial
 
 //**************************************************************************
 // global variables
@@ -106,7 +112,9 @@ void setup() {
     xTaskCreate(threadA,     "Task A",       256, NULL, tskIDLE_PRIORITY + 3, &Handle_aTask);
     xTaskCreate(threadB,     "Task B",       256, NULL, tskIDLE_PRIORITY + 2, &Handle_bTask);
     xTaskCreate(taskMonitor, "Task Monitor", 256, NULL, tskIDLE_PRIORITY + 1, &Handle_monitorTask);
-
+#if defined(USE_TINYUSB)
+    tinyusb_task();
+#endif
     // Start the RTOS, this function wiTerminal never return and wiTerminal schedule the tasks.
     vTaskStartScheduler();
 
