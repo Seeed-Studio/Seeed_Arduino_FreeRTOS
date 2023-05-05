@@ -50,6 +50,12 @@ to exclude the API function. */
 #define INCLUDE_uxTaskGetStackHighWaterMark 1
 #define INCLUDE_eTaskGetState 1
 
+/* Arduino framework integration */
+// calibration factor for vNopDelayMS in error_hooks.c
+// used to set accuracy of nopDelayMS function
+// this was experimentally chosen from a stm32h7xx processor
+#define configCAL_FACTOR (F_CPU/7000)
+
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
 /* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */
